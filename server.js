@@ -69,7 +69,7 @@ io.on("connection", (socket) => {
       handleUserInput(botName, socket, sessionID, orders, msg);
     });
     socket.on("disconnect", () => {
-      console.log("Customer  left", user.id);
+      console.log("Customer  left", user.username);
     });
   });
 });
