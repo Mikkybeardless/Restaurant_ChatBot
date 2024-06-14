@@ -2,7 +2,7 @@
 
 # what can this bot do:
 
-# Attend to customers, taking and giving replies to orders based on a select menue.
+- Attend to customers, taking and giving replies to orders based on a select menue.
 
 # how it works:
 
@@ -15,3 +15,5 @@
 - The bot has specified valid inputs that output a message to the customer using a switch statement
 
 - Embedded switch for placing an order allowing the user to select meal type.
+
+- use node server.js to run the app
