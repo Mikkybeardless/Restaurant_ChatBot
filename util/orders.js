@@ -131,7 +131,10 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
           userOrders.currentOrder.push(item);
           socket.emit(
             "message",
-            formatMessage(botName, `${item} added to your order`)
+            formatMessage(
+              botName,
+              `${item} added to your order. You can place more order`
+            )
           );
         } else {
           socket.emit("message", formatMessage(botName, `Invalid selection`));
@@ -139,10 +142,7 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
       } else {
         socket.emit("message", formatMessage(botName, `Invalid selection`));
       }
-      socket.emit(
-        "message",
-        formatMessage(botName, `You can place more order`)
-      );
+
       socket.emit("message", formatMessage(botName, options));
       break;
   }
