@@ -2,7 +2,7 @@
 
 # what can this bot do:
 
-# Attend to customers, taking and giving replies to orders based on a select menue.
+- Attend to customers, taking and giving replies to orders based on a select menue.
 
 # how it works:
 
