@@ -35,27 +35,42 @@ io.use(
 
 const botName = "Restaurant Bot";
 const orders = {};
+const users = [];
+
+function newCustomer(username, id) {
+  const user = {
+    username,
+    id,
+  };
+  users.push(user);
+  return user;
+}
 // run when client connects
 io.on("connection", (socket) => {
   const sessionID = socket.handshake.sessionID;
+  socket.on("Customer join", ({ username }) => {
+    const user = newCustomer(username, sessionID);
 
-  if (!orders[sessionID]) {
-    orders[sessionID] = {
-      currentOrder: [],
-      orderHistory: [],
-    };
-  }
-  socket.emit(
-    "welcome",
-    formatMessage(botName, "Welcome to Eat_Well Restaurant")
-  );
+    if (!orders[sessionID]) {
+      orders[sessionID] = {
+        currentOrder: [],
+        orderHistory: [],
+      };
+    }
+    socket.emit(
+      "welcome",
+      formatMessage(
+        botName,
+        `Welcome to Eat_Well Restaurant <strong>${user.username}</strong>`
+      )
+    );
 
-  socket.on("selected option", (msg) => {
-    handleUserInput(botName, socket, sessionID, orders, msg);
-  });
-
-  socket.on("disconnect", () => {
-    console.log("user left", sessionID);
+    socket.on("selected option", (msg) => {
+      handleUserInput(botName, socket, sessionID, orders, msg);
+    });
+    socket.on("disconnect", () => {
+      console.log("Customer  left", user.id);
+    });
   });
 });
 

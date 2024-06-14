@@ -3,6 +3,13 @@ const socket = io();
 const chatMessage = document.querySelector(".chat-messages");
 const chatForm = document.getElementById("chat-form");
 
+// Get username and room from url
+const { username } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});
+
+// Join chat
+socket.emit("Customer join", { username });
 // output welcome
 socket.on("welcome", (message) => {
   outPutWelcome(message);

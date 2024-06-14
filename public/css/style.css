@@ -187,8 +187,12 @@ img{
 	width: 100%;
 }
 
-.item{
+ strong{
 	color: var(--dark-color-a);
+}
+
+.orders{
+	color: black;
 }
 
 .join-main .btn {

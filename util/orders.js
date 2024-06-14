@@ -3,7 +3,7 @@ const formatMessage = require("./messages");
 const getItemFromSelection = (select) => {
   switch (select) {
     case "a":
-      return "<strong class='item'>Beans Only</strong>";
+      return "<strong class='item'>Beans Porrage</strong>";
       break;
     case "b":
       return "<strong class='item'>Jollof Rice</strong>";
@@ -59,8 +59,15 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
           )
         );
       } else {
-        socket.emit("message", formatMessage(botName, "No order placed."));
+        socket.emit(
+          "message",
+          formatMessage(
+            botName,
+            "No order placed, place an order <strong>Now<strong>"
+          )
+        );
       }
+
       socket.emit("message", formatMessage(botName, options));
       break;
 
@@ -70,12 +77,19 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
           "message",
           formatMessage(
             botName,
-            `<strong>Placed orders:</strong> ${userOrders.orderHistory}`
+            `<strong class = 'orders'>Placed orders:</strong> ${userOrders.orderHistory}`
           )
         );
       } else {
-        socket.emit("message", formatMessage(botName, `No Order in history`));
+        socket.emit(
+          "message",
+          formatMessage(
+            botName,
+            `No Order in history. Select 99 to Checkout placed orders and add them to order hisyory if you have added orders`
+          )
+        );
       }
+
       socket.emit("message", formatMessage(botName, options));
       break;
 
@@ -86,7 +100,13 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
           formatMessage(botName, `Current orders: ${userOrders.currentOrder}`)
         );
       } else {
-        socket.emit("message", formatMessage(botName, `No Current Order`));
+        socket.emit(
+          "message",
+          formatMessage(
+            botName,
+            `No order placed, place an order <strong>Now<strong>`
+          )
+        );
       }
       socket.emit("message", formatMessage(botName, options));
       break;
@@ -97,7 +117,7 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
 
         socket.emit("message", formatMessage(botName, `Order canceled`));
       } else {
-        socket.emit("message", formatMessage(botName, `No order to canceled`));
+        socket.emit("message", formatMessage(botName, `No order to cancel`));
       }
       socket.emit("message", formatMessage(botName, options));
       break;
@@ -119,6 +139,10 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
       } else {
         socket.emit("message", formatMessage(botName, `Invalid selection`));
       }
+      socket.emit(
+        "message",
+        formatMessage(botName, `You can place more order`)
+      );
       socket.emit("message", formatMessage(botName, options));
       break;
   }
