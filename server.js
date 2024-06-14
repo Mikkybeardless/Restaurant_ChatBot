@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
   const sessionID = socket.handshake.sessionID;
   socket.on("Customer join", ({ username }) => {
     const user = newCustomer(username, sessionID);
-
+    console.log("Customer joined", user.username);
     if (!orders[sessionID]) {
       orders[sessionID] = {
         currentOrder: [],
