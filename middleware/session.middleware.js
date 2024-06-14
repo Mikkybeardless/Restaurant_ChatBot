@@ -8,7 +8,7 @@ const sessionMiddleware = session({
   secret: process.env.SECRETE,
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 },
+  cookie: { maxAge: 600000 },
 });
 
 module.exports = { sessionMiddleware, sharedSession };

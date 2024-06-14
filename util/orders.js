@@ -24,7 +24,6 @@ const getItemFromSelection = (select) => {
 };
 
 const handleUserInput = (botName, socket, sessionID, orders, msg) => {
-  console.log(msg);
   const userOrders = orders[sessionID];
   const options = `<ul>
   <strong>Select an option:</strong>
@@ -38,7 +37,7 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
   switch (msg) {
     case "1":
       const items = `<ul> <strong>Select an item to order</strong>:
-      <li> a. Beans </li>
+      <li> a. Beans Porrage </li>
       <li> b. Jollof Rice </li>
       <li> c. Beans and Bread </li>
       <li> d. Ebba and Egusi soup </li>
