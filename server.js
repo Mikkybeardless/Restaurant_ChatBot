@@ -49,10 +49,12 @@ function newCustomer(username, id) {
 io.on("connection", (socket) => {
   const sessionID = socket.handshake.sessionID;
   socket.on("Customer join", ({ username }) => {
-    const user = newCustomer(username, sessionID);
+    const userId = sessionID + username;
+    const user = newCustomer(username, userId);
     console.log("Customer joined", user.username);
-    if (!orders[sessionID]) {
-      orders[sessionID] = {
+    console.log("customer id", user.id);
+    if (!orders[userId]) {
+      orders[userId] = {
         currentOrder: [],
         orderHistory: [],
       };
@@ -66,7 +68,7 @@ io.on("connection", (socket) => {
     );
 
     socket.on("selected option", (msg) => {
-      handleUserInput(botName, socket, sessionID, orders, msg);
+      handleUserInput(botName, socket, userId, orders, msg);
     });
     socket.on("disconnect", () => {
       console.log("Customer  left", user.username);
