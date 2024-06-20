@@ -9,13 +9,16 @@ const getItemFromSelection = (select) => {
       return "<strong class='item'>Jollof Rice</strong>";
       break;
     case "c":
-      return "<strong class='item'>Shawama</strong>";
+      return "<strong class='item'>Beans and Bread</strong>";
       break;
     case "d":
       return "<strong class='item'>Ebba and Egusi soup</strong>";
       break;
     case "e":
       return "<strong class='item'>Cat fish pepper soup</strong>";
+      break;
+    case "f":
+      return "<strong class='item'>Shawama</strong>";
       break;
     default:
       return null;
@@ -42,6 +45,7 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
       <li> c. Beans and Bread </li>
       <li> d. Ebba and Egusi soup </li>
       <li> e. Cat fish pepper soup </li>
+      <li> f. Shawama </li>
       </ul>`;
 
       socket.emit("message", formatMessage(botName, items));
@@ -85,7 +89,7 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
           "message",
           formatMessage(
             botName,
-            `No Order in history. Select 99 to Checkout placed orders and add them to order hisyory if you have added orders`
+            `No Order in history. Select 99 to Checkout current orders and add them to order hisyory if you have made orders`
           )
         );
       }
@@ -104,7 +108,7 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
           "message",
           formatMessage(
             botName,
-            `No order placed, place an order <strong>Now<strong>`
+            `No current order, place an order <strong>Now!<strong> or select 98 to view order history`
           )
         );
       }
@@ -123,7 +127,7 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
       break;
 
     default:
-      const validInputs = ["a", "b", "c", "d", "e"];
+      const validInputs = ["a", "b", "c", "d", "e", "f"];
 
       if (validInputs.includes(msg)) {
         const item = getItemFromSelection(msg);

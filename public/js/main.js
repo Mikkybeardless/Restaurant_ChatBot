@@ -30,7 +30,7 @@ chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const msg = e.target.elements.msg.value;
-
+  outPutInput(msg);
   // emit message to server
   socket.emit("selected option", msg);
 
@@ -70,6 +70,13 @@ function outPutSelectMenue(message) {
   chatMessage.appendChild(div);
 }
 
+function outPutInput(msg) {
+  const div = document.createElement("div");
+  div.classList.add("input-div");
+
+  div.innerHTML = msg;
+  chatMessage.appendChild(div);
+}
 function outPutReply(message) {
   const div = document.createElement("div");
   div.classList.add("message");
