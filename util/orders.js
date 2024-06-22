@@ -125,7 +125,7 @@ const handleUserInput = (botName, socket, sessionID, order, msg) => {
       if (userOrder.currentOrder.length > 0) {
         socket.emit(
           "message",
-          formatMessage(botName, `Current orders: ${userOrders.currentOrder}`)
+          formatMessage(botName, `Current orders: ${userOrder.currentOrder}`)
         );
       } else {
         socket.emit(
