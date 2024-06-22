@@ -207,7 +207,7 @@ img{
 	color: var(--dark-color-a);
 }
 
-.orders{
+.orders, .total{
 	color: black;
 }
 

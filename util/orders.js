@@ -26,8 +26,8 @@ const getItemFromSelection = (select) => {
   }
 };
 
-const handleUserInput = (botName, socket, sessionID, orders, msg) => {
-  const userOrders = orders[sessionID];
+const handleUserInput = (botName, socket, sessionID, order, msg) => {
+  const userOrder = order[sessionID];
   const options = `<ul>
   <strong>Select an option:</strong>
   <li> 1. Place an order </li>
@@ -37,23 +37,48 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
   <li> 0. Cancel order </li>
   </ul>`;
 
+  const menu = {
+    a: {
+      item: "<strong class='item'>Beans Porrage</strong>",
+      price: 75,
+    },
+    b: { item: "<strong class='item'>Jollof Rice</strong>", price: 125 },
+    c: {
+      item: "<strong class='item'>Beans and Bread</strong>",
+      price: 115,
+    },
+    d: {
+      item: "<strong class='item'>Ebba and Egusi soup</strong>",
+      price: 105,
+    },
+    e: {
+      item: "<strong class='item'>Cat fish pepper soup</strong>",
+      price: 85,
+    },
+    f: { item: "<strong class='item'>Shawama</strong>", price: 25 },
+  };
+
   switch (msg) {
     case "1":
       const items = `<ul> <strong>Select an item to order</strong>:
-      <li> a. Beans Porrage </li>
-      <li> b. Jollof Rice </li>
-      <li> c. Beans and Bread </li>
-      <li> d. Ebba and Egusi soup </li>
-      <li> e. Cat fish pepper soup </li>
-      <li> f. Shawama </li>
+      <li> a. Beans Porrage - $75 </li>
+      <li> b. Jollof Rice - $125 </li>
+      <li> c. Beans and Bread - $115 </li>
+      <li> d. Ebba and Egusi soup - $105 </li>
+      <li> e. Cat fish pepper soup - $85 </li>
+      <li> f. Shawama - $25 </li>
       </ul>`;
 
       socket.emit("message", formatMessage(botName, items));
       break;
     case "99":
-      if (userOrders.currentOrder.length > 0) {
-        userOrders.orderHistory.push(userOrders.currentOrder);
-        userOrders.currentOrder = [];
+      if (userOrder.currentOrder.length > 0) {
+        userOrder.orderHistory.push({
+          order: [...userOrder.currentOrder],
+          total: userOrder.total,
+        });
+        userOrder.currentOrder = [];
+        userOrder.total = 0;
 
         socket.emit(
           "message",
@@ -76,14 +101,13 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
       break;
 
     case "98":
-      if (userOrders.orderHistory.length > 0) {
-        socket.emit(
-          "message",
-          formatMessage(
-            botName,
-            `<strong class = 'orders'>Placed orders:</strong> ${userOrders.orderHistory}`
-          )
-        );
+      if (userOrder.orderHistory.length > 0) {
+        let historyMessage = userOrder.orderHistory.map((order, index) => {
+          return `<strong class = 'orders'>Order ${index + 1}:</strong> ${
+            order.order
+          }. <strong class = 'total'>Total: $${order.total}. </strong>\n`;
+        });
+        socket.emit("message", formatMessage(botName, historyMessage));
       } else {
         socket.emit(
           "message",
@@ -98,7 +122,7 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
       break;
 
     case "97":
-      if (userOrders.currentOrder.length > 0) {
+      if (userOrder.currentOrder.length > 0) {
         socket.emit(
           "message",
           formatMessage(botName, `Current orders: ${userOrders.currentOrder}`)
@@ -116,8 +140,9 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
       break;
 
     case "0":
-      if (userOrders.currentOrder.length > 0) {
-        userOrders.currentOrder = [];
+      if (userOrder.currentOrder.length > 0) {
+        userOrder.currentOrder = [];
+        userOrder.total = 0;
 
         socket.emit("message", formatMessage(botName, `Order canceled`));
       } else {
@@ -127,22 +152,18 @@ const handleUserInput = (botName, socket, sessionID, orders, msg) => {
       break;
 
     default:
-      const validInputs = ["a", "b", "c", "d", "e", "f"];
-
-      if (validInputs.includes(msg)) {
-        const item = getItemFromSelection(msg);
-        if (item) {
-          userOrders.currentOrder.push(item);
-          socket.emit(
-            "message",
-            formatMessage(
-              botName,
-              `${item} added to your order. You can place more order`
-            )
-          );
-        } else {
-          socket.emit("message", formatMessage(botName, `Invalid selection`));
-        }
+      if (menu[msg]) {
+        const item = menu[msg].item;
+        const price = menu[msg].price;
+        userOrder.currentOrder.push(item);
+        userOrder.total += price;
+        socket.emit(
+          "message",
+          formatMessage(
+            botName,
+            `${item} added to your order. You can place more order`
+          )
+        );
       } else {
         socket.emit("message", formatMessage(botName, `Invalid selection`));
       }

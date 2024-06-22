@@ -34,7 +34,7 @@ io.use(
 );
 
 const botName = "Restaurant Bot";
-const orders = {};
+const order = {};
 const users = [];
 
 function newCustomer(username, id) {
@@ -53,10 +53,11 @@ io.on("connection", (socket) => {
     const user = newCustomer(username, userId);
     console.log("Customer joined", user.username);
     console.log("customer id", user.id);
-    if (!orders[userId]) {
-      orders[userId] = {
+    if (!order[userId]) {
+      order[userId] = {
         currentOrder: [],
         orderHistory: [],
+        total: 0,
       };
     }
     socket.emit(
@@ -68,7 +69,7 @@ io.on("connection", (socket) => {
     );
 
     socket.on("selected option", (msg) => {
-      handleUserInput(botName, socket, userId, orders, msg);
+      handleUserInput(botName, socket, userId, order, msg);
     });
     socket.on("disconnect", () => {
       console.log("Customer  left", user.username);
