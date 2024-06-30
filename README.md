@@ -17,6 +17,7 @@ This project was created perform the following tasks
 - Embedded switch for placing an order allowing the user to select meal type.
 
 ## Table of Contents
+- [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
