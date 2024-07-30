@@ -13,7 +13,7 @@ const io = socketio(server);
 
 dotenv.config();
 const PORT = 3000 || process.env.PORT;
-const HOST = process.env.HOST;
+const HOST = process.env.HOST || "localhost";
 
 // internal modules
 const formatMessage = require("./util/messages");
