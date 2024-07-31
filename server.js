@@ -12,8 +12,8 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 dotenv.config();
-const PORT = 3000 || process.env.PORT;
-const HOST = process.env.HOST || "localhost";
+const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST;
 
 // internal modules
 const formatMessage = require("./util/messages");
