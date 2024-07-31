@@ -28,7 +28,10 @@ app.use(sessionMiddleware);
 
 // register view engine
 app.set("view engine", "ejs");
-app.use(express.static("public"));
+app.set("views", path.join(__dirname, "views"));
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
