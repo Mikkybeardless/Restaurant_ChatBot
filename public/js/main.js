@@ -1,7 +1,5 @@
-// const socket = io();
-const socket = io(
-  "https://restaurant-chat-8r67ox6fn-igashi-michaels-projects.vercel.app/"
-);
+const socket = io();
+
 const chatMessage = document.querySelector(".chat-messages");
 const chatForm = document.getElementById("chat-form");
 
