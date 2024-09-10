@@ -1,9 +1,9 @@
 # Restaurant chatbot
 
-## A chatbot made with expressjs ejs and socket.io.
+## A chatbot made with express ejs and web socket.
 
 ## Overview: 
-This project was an assignment project on working with socket.io. I did this project while still a student of Altschool Africa using `expressjs` and `socket.io `.  The restaurant bot is designed to perform the following tasks:
+This project was an assignment project on working with `socket.io`. I did this project while still a student of Altschool Africa using `expressjs`, `ejs` and `socket.io `.  The restaurant bot is designed to perform the following tasks:
 
 
 * It has a login page that grabs the customer's name and sends it in the request query
